@@ -23,7 +23,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private final String[] storagePerm = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE};
-    private ArrayList<FileModel> fileModels;
+    private List<FileModel> fileModels;
     private MainA_Adapter mainAdapter;
 
     @Override
@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getPerm.launch(storagePerm);
 
-        //fileModels = new ArrayList<>();
-        mainAdapter = new MainA_Adapter(displayFiles(Environment.getExternalStorageDirectory().getPath()));
+        fileModels = new ArrayList<>();
+        mainAdapter = new MainA_Adapter(fileModels);
 
         RecyclerView filesRecycler = findViewById(R.id.files_recycler);
         filesRecycler.setLayoutManager(new GridLayoutManager(this, 4));
         filesRecycler.setAdapter(mainAdapter);
 
-
+        displayFiles(Environment.getExternalStorageDirectory().getPath());
     }
 
 
-    private ArrayList<FileModel> displayFiles(String path){
+    private void displayFiles(String path){
         File directory = new File(path);
         File[] files = directory.listFiles();
 
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             //mainAdapter.notifyDataSetChanged();
         }
 
-        return fileModels;
     }
 
 
