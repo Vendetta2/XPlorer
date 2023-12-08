@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="4dp"
+    android:layout_width="96dp"
+    android:layout_height="wrap_content"
+    android:layout_rowWeight="1">
+
+
+    <ImageView
+        android:id="@+id/folder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_folder_large">
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/file_name"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:text="@string/random_text"
+        android:layout_below="@id/folder"
+        android:maxLines="1"
+        android:elegantTextHeight="true">
+    </TextView>
+
+
+</RelativeLayout>
