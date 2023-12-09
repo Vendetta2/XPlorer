@@ -41,8 +41,8 @@
         </Button>
 
 
-        <Button
-            android:id="@+id/link_butt"
+        <TextView
+            android:id="@+id/link_tv"
             android:text="@string/random_text"
             android:textSize="11sp"
             android:layout_width="281dp"
@@ -50,7 +50,7 @@
             android:layout_margin="5sp"
             android:layout_weight="5">
 
-        </Button>
+        </TextView>
 
         <Button
             android:id="@+id/mor_func_butt"

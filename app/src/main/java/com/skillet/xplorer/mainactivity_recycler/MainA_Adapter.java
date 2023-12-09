@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,14 +44,21 @@ public class MainA_Adapter extends RecyclerView.Adapter<MainA_Adapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return fileList.size();
+        if(fileList.size() > 0) {
+            return fileList.size();
+        }else {
+            return 0;
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView fileName;
+        ImageView folder;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            folder = itemView.findViewById(R.id.folder);
             fileName = itemView.findViewById(R.id.file_name);
         }
     }

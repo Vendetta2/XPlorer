@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.skillet.xplorer.mainactivity_recycler.MainA_Adapter;
@@ -19,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,13 +36,33 @@ public class MainActivity extends AppCompatActivity {
         getPerm.launch(storagePerm);
 
         fileModels = new ArrayList<>();
+
+
+        File directory = new File(Objects.requireNonNull(getExternalFilesDir(null)).toURI());
+        File[] files = directory.listFiles();
+
+        if(files !=null){
+            fileModels.clear();
+
+            for (File file : files){
+                String name = file.getName();
+                String filepath = file.getAbsolutePath();
+                long size = file.length();
+                fileModels.add(new FileModel(name,filepath,size));
+                Log.d("FileName", file.getName());
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "It's not working", Toast.LENGTH_SHORT).show();
+        }
+
+
         mainAdapter = new MainA_Adapter(fileModels);
 
         RecyclerView filesRecycler = findViewById(R.id.files_recycler);
         filesRecycler.setLayoutManager(new GridLayoutManager(this, 4));
         filesRecycler.setAdapter(mainAdapter);
 
-        displayFiles(Environment.getExternalStorageDirectory().getPath());
+        displayFiles(Objects.requireNonNull(getExternalFilesDir(null)).getPath());
     }
 
 
@@ -51,9 +74,15 @@ public class MainActivity extends AppCompatActivity {
             fileModels.clear();
 
             for (File file : files){
-                fileModels.add(new FileModel(file.getName()));
+                String name = file.getName();
+                String filepath = file.getAbsolutePath();
+                long size = file.length();
+                fileModels.add(new FileModel(name,filepath,size));
+                Log.d("FileName", file.getName());
             }
-            //mainAdapter.notifyDataSetChanged();
+           // mainAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(MainActivity.this, "It's not working", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -72,13 +101,3 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-/*@Override
-                public void onActivityResult(Boolean isGranted) {
-                    if(isGranted){
-                        Toast.makeText(MainActivity.this,"thx",Toast.LENGTH_SHORT).show();
-                    } else{
-                        Toast.makeText(MainActivity.this,"Access denied, please give permission",Toast.LENGTH_SHORT).show();
-                        getPerm.launch(storagePerm);
-                    }
-
-                }*/
