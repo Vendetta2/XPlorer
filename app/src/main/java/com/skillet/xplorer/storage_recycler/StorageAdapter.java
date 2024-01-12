@@ -1,11 +1,8 @@
 package com.skillet.xplorer.storage_recycler;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.skillet.xplorer.ExternalStorageActivity;
-import com.skillet.xplorer.MainMenuActivity;
 import com.skillet.xplorer.R;
 
 import java.io.File;
-import java.nio.file.Files;
 
 
-public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.MyViewHolder> {
+public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.InternalViewHolder> {
 
     Context context;
     File[] filesAndFolders;
@@ -39,14 +34,14 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.MyViewHo
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InternalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.storage_activity_item_list, parent, false);
 
-        return new MyViewHolder(view);
+        return new InternalViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InternalViewHolder holder, int position) {
         File selectedFile = filesAndFolders[position];
         holder.fileFolderName.setText(selectedFile.getName());
 
@@ -85,19 +80,16 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.MyViewHo
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Is longClicked", Toast.LENGTH_SHORT).show();
-
                 PopupMenu popupMenu = new PopupMenu(context, v);
                 popupMenu.getMenu().add("DELETE");
                 popupMenu.getMenu().add("MOVE");
                 popupMenu.getMenu().add("RENAME");
+                popupMenu.getMenu().add("MKDIR");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getTitle().equals(null)){
-                            Toast.makeText(context.getApplicationContext(),"Is a null but idk", Toast.LENGTH_SHORT).show();
-                        } else if(item.getTitle().equals("DELETE")){
+                        if(item.getTitle().equals("DELETE")){
                             boolean isDeleted = selectedFile.delete();
                             if(isDeleted){
                                 Toast.makeText(context.getApplicationContext(),"Has been Deleted", Toast.LENGTH_SHORT).show();
@@ -130,11 +122,11 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.MyViewHo
         return filesAndFolders.length;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class InternalViewHolder extends RecyclerView.ViewHolder {
         TextView fileFolderName;
         ImageView fileFolderIMG;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public InternalViewHolder(@NonNull View itemView) {
             super(itemView);
             fileFolderName = itemView.findViewById(R.id.file_folder_name);
             fileFolderIMG = itemView.findViewById(R.id.file_folder);

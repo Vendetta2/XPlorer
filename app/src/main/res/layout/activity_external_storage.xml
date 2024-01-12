@@ -43,6 +43,7 @@
         <TextView
             android:id="@+id/link_tv"
             android:text="@string/random_text"
+            android:maxLines="2"
             android:textSize="11sp"
             android:layout_gravity="center"
             android:padding="10sp"

@@ -5,12 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/dark_grey"
     tools:context=".MainMenuActivity">
 
     <Button
         android:id="@+id/ext_storage_butt"
         android:text="External Storage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Button>
+
+    <Button
+        android:id="@+id/ent_storage_butt"
+        android:text="Enternal Storage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </Button>
