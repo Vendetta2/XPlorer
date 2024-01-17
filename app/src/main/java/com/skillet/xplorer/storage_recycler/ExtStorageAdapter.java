@@ -51,14 +51,28 @@ public class ExtStorageAdapter extends RecyclerView.Adapter<ExtStorageAdapter.Ex
             @Override
             public void onClick(View v) {
                 if(file.isDirectory()){
+
+
+/*                    DocumentFile documentFile = DocumentFile.fromTreeUri(context, file.getUri());
+                    assert documentFile != null;
+                    mFiles = Arrays.asList(documentFile.listFiles());
+                    notifyDataSetChanged();*/
+
+/*                    Uri treeUri = file.getUri();
+                    context.startActivity(new Intent(Intent.ACTION_VIEW, treeUri));*/
+
+
                     Intent intent = new Intent(context, RemovableStorageActivity.class);
-                    Uri treeUri = file.getUri();
-                    intent.putExtra("treeUri", treeUri.toString());
+                    String treeUri = file.getUri().toString();
+                    intent.removeExtra("treeUri");
+                    intent.putExtra("treeUri", treeUri);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Toast.makeText(context, treeUri.toString(), Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(context, treeUri, Toast.LENGTH_SHORT ).show();
                     context.startActivity(intent);
 
-                }
+                }/*
+                Uri treeUri = file.getUri();
+                context.startActivity(new Intent(Intent.ACTION_VIEW, treeUri));*/
             }
         });
 
