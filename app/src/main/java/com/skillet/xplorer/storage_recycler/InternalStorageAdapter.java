@@ -1,5 +1,6 @@
 package com.skillet.xplorer.storage_recycler;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -15,20 +17,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.skillet.xplorer.ExternalStorageActivity;
+import com.skillet.xplorer.InternalStorageActivity;
 import com.skillet.xplorer.R;
 
 import java.io.File;
 
 
-public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.InternalViewHolder> {
+public class InternalStorageAdapter extends RecyclerView.Adapter<InternalStorageAdapter.InternalViewHolder> {
 
     Context context;
     File[] filesAndFolders;
+    String path;
 
-    public StorageAdapter(Context context, File[] filesAndFolders){
+    public InternalStorageAdapter(Context context, File[] filesAndFolders, String path){
         this.context = context;
         this.filesAndFolders = filesAndFolders;
+        this.path = path;
     }
 
 
@@ -55,7 +59,7 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
             @Override
             public void onClick(View v) {
                 if(selectedFile.isDirectory()){
-                    Intent intent = new Intent(context, ExternalStorageActivity.class);
+                    Intent intent = new Intent(context, InternalStorageActivity.class);
                     String path = selectedFile.getAbsolutePath();
                     intent.putExtra("path", path);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -84,7 +88,6 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
                 popupMenu.getMenu().add("DELETE");
                 popupMenu.getMenu().add("MOVE");
                 popupMenu.getMenu().add("RENAME");
-                popupMenu.getMenu().add("MKDIR");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -94,7 +97,6 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
                             if(isDeleted){
                                 Toast.makeText(context.getApplicationContext(),"Has been Deleted", Toast.LENGTH_SHORT).show();
                                 v.setVisibility(View.GONE);
-
                             }
                         }
                         if(item.getTitle().equals("MOVE")){
@@ -102,7 +104,35 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
 
                         }
                         if(item.getTitle().equals("RENAME")){
+/*
                             Toast.makeText(context.getApplicationContext(),"Has been Renamed", Toast.LENGTH_SHORT).show();
+                            fileRename(selectedFile);*/
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Введите новое название");
+
+                            EditText editText = new EditText(context);
+                            builder.setView(editText);
+
+                            builder.setPositiveButton("Rename", (dialog, which) -> {
+                                String folderName = editText.getText().toString();
+
+                                File newFolder = new File(path, folderName);
+                                if(selectedFile.renameTo(newFolder)){
+                                    Toast.makeText(context, "Renamed to " + folderName, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                                }
+
+                            });
+
+                            builder.setNegativeButton("Cancel", (dialog, which) -> {
+
+                            });
+
+                            builder.show();
+
+                            return true;
 
                         }
                         return true;
@@ -116,6 +146,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
 
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -133,6 +165,34 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.Internal
 
         }
     }
+
+
+/*    public void fileRename(File file2Ren){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Введите новое название");
+
+        EditText editText = new EditText(context);
+        builder.setView(editText);
+
+        builder.setPositiveButton("Rename", ((dialog, which) -> {
+            String folderName = editText.getText().toString();
+
+            File newFolder = new File(path, folderName);
+            if(file2Ren.renameTo(newFolder)){
+                Toast.makeText(context, "Renamed to " + folderName, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+            }
+
+        }));
+
+        builder.setNegativeButton("Cancel", ((dialog, which) -> {
+
+        }));
+
+        builder.show();
+
+    }*/
 
 
 }

@@ -20,9 +20,26 @@ public class FlashDriveInfo {
 
     public static ArrayList<String> getCardPath(Context context){
         File[] dirs = ContextCompat.getExternalFilesDirs(context, null);
-        for (File dir : dirs) {
-            cardPaths.add(dir.getParent());
+        if(cardPaths.isEmpty()){
+            for (File dir : dirs) {
+                cardPaths.add(dir.getParent());
+            }
+        } else if (cardPaths.size() <= dirs.length){
+            for (File dir : dirs) {
+                if(!cardPaths.contains(dir.getParent())){
+                    cardPaths.add(dir.getParent());
+                }
+            }
+        } else {
+            cardPaths.clear();
+            for (File dir : dirs) {
+                cardPaths.add(dir.getParent());
+            }
         }
+
+/*        for (File dir : dirs) {
+            cardPaths.add(dir.getParent());
+        }*/
         return cardPaths;
     }
 

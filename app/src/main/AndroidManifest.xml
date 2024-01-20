@@ -29,9 +29,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExternalStorageActivity"
+            android:name=".InternalStorageActivity"
             android:exported="false"/>
-        <activity android:name=".RemovableStorageActivity"
+        <activity android:name=".ExternalStorageActivity"
             android:exported="false"/>
     </application>
 

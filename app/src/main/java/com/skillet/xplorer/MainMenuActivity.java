@@ -1,10 +1,8 @@
 package com.skillet.xplorer;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.documentfile.provider.DocumentFile;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,18 +12,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.storage.StorageVolume;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.skillet.xplorer.flash_info.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -45,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkPermissions()){
-                    Intent intent = new Intent(MainMenuActivity.this, ExternalStorageActivity.class);
+                    Intent intent = new Intent(MainMenuActivity.this, InternalStorageActivity.class);
                     String path = Environment.getExternalStorageDirectory().getAbsolutePath();
                     intent.putExtra("path", path);
                     startActivity(intent);
@@ -60,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkPermissions()){
                     if(treeUri != null){
-                        Intent intent = new Intent(MainMenuActivity.this, RemovableStorageActivity.class);
+                        Intent intent = new Intent(MainMenuActivity.this, ExternalStorageActivity.class);
                         intent.putExtra("treeUri", treeUri);
                         startActivity(intent);
                     } else getExtDir();

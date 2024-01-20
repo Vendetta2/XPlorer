@@ -2,7 +2,6 @@ package com.skillet.xplorer.storage_recycler;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +14,15 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.skillet.xplorer.R;
-import com.skillet.xplorer.RemovableStorageActivity;
-import com.skillet.xplorer.flash_info.ExternalStorageManager;
+import com.skillet.xplorer.ExternalStorageActivity;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ExtStorageAdapter extends RecyclerView.Adapter<ExtStorageAdapter.ExtViewHolder > {
+public class ExternalStorageAdapter extends RecyclerView.Adapter<ExternalStorageAdapter.ExtViewHolder > {
     private List<DocumentFile> mFiles;
     Context context;
 
-    public ExtStorageAdapter(List<DocumentFile> files, Context context){
+    public ExternalStorageAdapter(List<DocumentFile> files, Context context){
         mFiles = files;
         this.context = context;
     }
@@ -53,16 +50,7 @@ public class ExtStorageAdapter extends RecyclerView.Adapter<ExtStorageAdapter.Ex
                 if(file.isDirectory()){
 
 
-/*                    DocumentFile documentFile = DocumentFile.fromTreeUri(context, file.getUri());
-                    assert documentFile != null;
-                    mFiles = Arrays.asList(documentFile.listFiles());
-                    notifyDataSetChanged();*/
-
-/*                    Uri treeUri = file.getUri();
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, treeUri));*/
-
-
-                    Intent intent = new Intent(context, RemovableStorageActivity.class);
+                    Intent intent = new Intent(context, ExternalStorageActivity.class);
                     String treeUri = file.getUri().toString();
                     intent.removeExtra("treeUri");
                     intent.putExtra("treeUri", treeUri);
