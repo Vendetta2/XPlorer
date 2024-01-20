@@ -104,8 +104,7 @@ public class InternalStorageAdapter extends RecyclerView.Adapter<InternalStorage
 
                         }
                         if(item.getTitle().equals("RENAME")){
-/*
-                            Toast.makeText(context.getApplicationContext(),"Has been Renamed", Toast.LENGTH_SHORT).show();
+                            /*Toast.makeText(context.getApplicationContext(),"Has been Renamed", Toast.LENGTH_SHORT).show();
                             fileRename(selectedFile);*/
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
