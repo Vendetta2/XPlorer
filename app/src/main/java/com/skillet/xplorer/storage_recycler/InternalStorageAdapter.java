@@ -106,32 +106,8 @@ public class InternalStorageAdapter extends RecyclerView.Adapter<InternalStorage
                         if(item.getTitle().equals("RENAME")){
                             /*Toast.makeText(context.getApplicationContext(),"Has been Renamed", Toast.LENGTH_SHORT).show();
                             fileRename(selectedFile);*/
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Введите новое название");
-
-                            EditText editText = new EditText(context);
-                            builder.setView(editText);
-
-                            builder.setPositiveButton("Rename", (dialog, which) -> {
-                                String folderName = editText.getText().toString();
-
-                                File newFolder = new File(path, folderName);
-                                if(selectedFile.renameTo(newFolder)){
-                                    Toast.makeText(context, "Renamed to " + folderName, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-                                }
-
-                            });
-
-                            builder.setNegativeButton("Cancel", (dialog, which) -> {
-
-                            });
-
-                            builder.show();
-
-                            return true;
+                            popupMenu.dismiss();
+                            fileRename(selectedFile);
 
                         }
                         return true;
@@ -166,14 +142,15 @@ public class InternalStorageAdapter extends RecyclerView.Adapter<InternalStorage
     }
 
 
-/*    public void fileRename(File file2Ren){
+    public void fileRename(File file2Ren){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Введите новое название");
 
         EditText editText = new EditText(context);
         builder.setView(editText);
 
-        builder.setPositiveButton("Rename", ((dialog, which) -> {
+        builder.setPositiveButton("Rename", (dialog, which) -> {
             String folderName = editText.getText().toString();
 
             File newFolder = new File(path, folderName);
@@ -183,15 +160,15 @@ public class InternalStorageAdapter extends RecyclerView.Adapter<InternalStorage
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
             }
 
-        }));
+        });
 
-        builder.setNegativeButton("Cancel", ((dialog, which) -> {
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
 
-        }));
-
+        });
         builder.show();
 
-    }*/
+
+    }
 
 
 }
